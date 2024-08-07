@@ -5,7 +5,7 @@
     #- vcc_2015
     #- set_default_bios
     #- win_update
-    - create_dir
+    #- create_dir
    # - dellcomand
    # - 7zip
    # - firefox
