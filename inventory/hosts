@@ -1,6 +1,6 @@
 [win]
 win11 ansible_host=ansible-test.strefadevops.local
-dell-kasztanki ansible_host=dell-kasztanki.strefadevops.local
+tak ansible_host=bvvvvvvvsfmf.strefadevops.local
 [win:vars]
 ansible_user=ansible@STREFADEVOPS.LOCAL
 ansible_password="Padmawlada123@"
@@ -11,9 +11,9 @@ ansible_password="Padmawlada123@"
  # 30396262336431303166366539396332643234623238346532333861373438353733616262303330
  # 3263646462393530340a613764386263343130313331386433373339383732626636396631663039
  # 3933
-#ansible_connection=winrm
-#ansible_winrm_transport=kerberos
+ansible_connection=winrm
+ansible_winrm_transport=kerberos
 ansible_port=5985
-#ansible_winrm_ca_trust_path=files/RootCA_name.crt
-#ansible_winrm_kinit_mode=managed
+ansible_winrm_ca_trust_path=files/RootCA_name.crt
+ansible_winrm_kinit_mode=managed
 
