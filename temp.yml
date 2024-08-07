@@ -1,4 +1,4 @@
-7z- name: Configure computer
+- name: Configure computer
   hosts: tak
   roles:
     #- nuget
