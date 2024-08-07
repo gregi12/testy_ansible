@@ -2,7 +2,7 @@
 # tasks file for eset
   - name: Copy eset.zip to client
     win_copy:
-      src: /home/gsadmin/eset_padma.zip
+      src: /home/gregi/eset_padma.zip
       dest: C:\Users\ansible\konfiguracja
 
   - name: Unzip an eset agent
