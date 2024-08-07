@@ -2,7 +2,7 @@
 # tasks file for teamviewer
   - name: Copy TeamViewer.zip to client
     win_copy:
-      src: /home/gsadmin/TeamViewer_MSI64.zip
+      src: /home/gregi/TeamViewer_MSI64.zip
       dest: C:\Users\ansible\konfiguracja
 
   - name: Unzip TeamViewer
