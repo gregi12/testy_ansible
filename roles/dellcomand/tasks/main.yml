@@ -2,7 +2,7 @@
 # tasks file for dellcomand
   - name: Copy DCU zip to host machine
     win_copy:
-      src: /home/gsadmin/DCU5_3.zip
+      src: /home/gregi/DCU5_3.zip
       dest: C:\Users\ansible\DCU5_3.zip
 
   - name: Unzip content of archive
