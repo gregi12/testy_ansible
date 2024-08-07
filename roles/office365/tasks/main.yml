@@ -2,7 +2,7 @@
 # tasks file for office365
   - name: Copy office 365 to client
     win_copy:
-      src: /home/gsadmin/OfficeSetup.exe
+      src: /home/gregi/OfficeSetup.exe
       dest: C:\Users\ansible\konfiguracja
 
   - name: Installing office 365
