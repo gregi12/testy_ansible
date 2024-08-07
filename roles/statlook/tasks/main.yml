@@ -2,7 +2,7 @@
 # tasks file for statlook
   - name: Copy statlook installer
     win_copy:
-      src: /home/gsadmin/Agent-Statlook-10-10-126-10.msi
+      src: /home/gregi/Agent-Statlook-10-10-126-10.msi
       dest: C:\Users\ansible\konfiguracja\Agent-Statlook-10-10-126-10.msi
 
   - name: Install statlook agent
