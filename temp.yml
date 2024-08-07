@@ -9,10 +9,10 @@
    # - dellcomand
    # - 7zip
    # - firefox
-    - global
+   # - global
    # - eset
    # - statlook
-   # - teamviewer
+    - teamviewer
    # - office365
     - remove_dir
    # - dell_drivers
