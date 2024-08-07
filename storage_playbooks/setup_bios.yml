@@ -1,0 +1,13 @@
+- hosts: dell-first
+  tasks:
+  - name: Import DellBIOSProvider module and get current BIOS setting
+    win_shell: |
+       Import-Module DellBIOSProvider
+       # Set Ahci
+       Set-Item -Path dellsmbios:\SystemConfiguration\EmbSataRaid Ahci
+       #Set-ItemProperty -Path dellsmbios:\SystemConfiguration\EmbSataRaid -Name CurrentValue -Value "Ahci"
+       # wlacz TPM
+       Set-Item -Path dellsmbios:\SecureBoot\SecureBoot Enabled
+       Set-Item -Path dellsmbios:\TPMSecurity\TpmSecurity Enabled
+       # Set admin password
+       #Set-Item -Path dellsmbios:\Security\AdminPassword 68jchn

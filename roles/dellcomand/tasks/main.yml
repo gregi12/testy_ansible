@@ -1,0 +1,25 @@
+---
+# tasks file for dellcomand
+  - name: Copy DCU zip to host machine
+    win_copy:
+      src: /home/gsadmin/DCU5_3.zip
+      dest: C:\Users\ansible\DCU5_3.zip
+
+  - name: Unzip content of archive
+    win_unzip:
+      src: C:\Users\ansible\DCU5_3.zip
+      dest: C:\Users\ansible
+
+  - name: install DCU update tool
+    win_package:
+      path: C:\Users\ansible\DCU5.3\DellCommandUpdate.msi
+      state: present
+    register: DCU_output
+
+  - name: check and run if needed dell service which is necessery to avoid bugs
+    win_service:
+      name: "{{ item }}"
+      start_mode: auto
+      state: started
+    with_items:
+      - DellClientManagementService

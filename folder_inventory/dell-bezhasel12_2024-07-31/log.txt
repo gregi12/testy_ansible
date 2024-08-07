@@ -1,0 +1,115 @@
+
+PLAY [Configure computer] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [dell-bezhasel12]
+
+TASK [nuget : Install NuGet provider] ******************************************
+changed: [dell-bezhasel12]
+
+TASK [nuget : debug] ***********************************************************
+ok: [dell-bezhasel12] => {
+    "nuget_install_result": {
+        "changed": true,
+        "cmd": "Install-PackageProvider -Name NuGet -Force -Scope CurrentUser",
+        "delta": "0:00:04.843789",
+        "end": "2024-07-31 05:24:30.061665",
+        "failed": false,
+        "rc": 0,
+        "start": "2024-07-31 05:24:25.217876",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "\r\nName                           Version          Source           Summary                                               \r\n----                           -------          ------           -------                                               \r\nnuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    \r\n\r\n\r\n",
+        "stdout_lines": [
+            "",
+            "Name                           Version          Source           Summary                                               ",
+            "----                           -------          ------           -------                                               ",
+            "nuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    ",
+            "",
+            ""
+        ]
+    }
+}
+
+TASK [nuget : Install the required PowerShell Dell module] *********************
+changed: [dell-bezhasel12]
+
+TASK [nuget : debug] ***********************************************************
+ok: [dell-bezhasel12] => {
+    "module_install_result": {
+        "changed": true,
+        "cmd": "Install-Module -Name DellBIOSProvider -Force -AllowClobber -Scope CurrentUser",
+        "delta": "0:00:11.578132",
+        "end": "2024-07-31 05:24:46.079963",
+        "failed": false,
+        "rc": 0,
+        "start": "2024-07-31 05:24:34.501831",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "",
+        "stdout_lines": []
+    }
+}
+
+TASK [nuget : Install PSWindowsUpdate] *****************************************
+changed: [dell-bezhasel12]
+
+TASK [vcc_2015 : copy installer to host] ***************************************
+changed: [dell-bezhasel12]
+
+TASK [vcc_2015 : install vc 2015 so dellbiosprovider can be used] **************
+changed: [dell-bezhasel12]
+
+TASK [vcc_2015 : wait 10 sec] **************************************************
+ok: [dell-bezhasel12]
+
+TASK [set_default_bios : Import DellBIOSProvider module and get current BIOS setting] ***
+changed: [dell-bezhasel12]
+
+TASK [set_default_bios : Display BIOS setting results] *************************
+ok: [dell-bezhasel12] => {
+    "msg": ""
+}
+
+TASK [create_dir : Create directory for all installers] ************************
+changed: [dell-bezhasel12]
+
+TASK [dellcomand : Copy DCU zip to host machine] *******************************
+changed: [dell-bezhasel12]
+
+TASK [dellcomand : Unzip content of archive] ***********************************
+changed: [dell-bezhasel12]
+
+TASK [dellcomand : install DCU update tool] ************************************
+changed: [dell-bezhasel12]
+
+TASK [dellcomand : check and run if needed dell service which is necessery to avoid bugs] ***
+changed: [dell-bezhasel12] => (item=DellClientManagementService)
+
+TASK [remove_dir : Remove dir with installers] *********************************
+changed: [dell-bezhasel12]
+
+TASK [dell_drivers : scan to find updates for all drivers] *********************
+changed: [dell-bezhasel12]
+
+TASK [dell_drivers : apply updates] ********************************************
+changed: [dell-bezhasel12]
+
+TASK [dell_drivers : Reboot device after udpates] ******************************
+changed: [dell-bezhasel12]
+
+TASK [dell_drivers : Wait for the machine to come back online] *****************
+ok: [dell-bezhasel12]
+
+TASK [dell_drivers : apply updates] ********************************************
+changed: [dell-bezhasel12]
+
+TASK [dell_drivers : Reboot device after udpates] ******************************
+changed: [dell-bezhasel12]
+
+TASK [dell_drivers : Wait for the machine to come back online] *****************
+ok: [dell-bezhasel12]
+
+PLAY RECAP *********************************************************************
+dell-bezhasel12            : ok=24   changed=17   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

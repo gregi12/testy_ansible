@@ -1,0 +1,11 @@
+- hosts: dell-first
+  tasks:
+    - name: install vc 2015 so dellbiosprovider can be used
+      win_shell: C:\Users\admin\Videos\vc_redist.x64.exe /install /passive /norestart
+
+    - name: find-module on remote machine
+      win_shell: Find-Module DellBIOSProvider
+      register: found
+
+    - name: install module on remote machine
+      win_shell: Install-Module DellBIOSProvider 

@@ -1,0 +1,22 @@
+---
+# tasks file for nuget
+    - name: Install NuGet provider
+      win_shell: |
+        Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
+      register: nuget_install_result
+
+    - debug:
+         var: nuget_install_result
+
+    - name: Install the required PowerShell Dell module
+      win_shell: |
+        Install-Module -Name DellBIOSProvider -Force -AllowClobber -Scope CurrentUser
+      register: module_install_result
+
+    - debug:
+        var: module_install_result
+
+    - name: Install PSWindowsUpdate
+      win_shell: |
+        Install-Module PSWindowsUpdate -Force -AllowClobber -Scope CurrentUser
+

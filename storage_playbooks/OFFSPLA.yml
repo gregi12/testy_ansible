@@ -1,0 +1,24 @@
+---
+- hosts: all
+  tasks:
+
+    - name: Copy a SPLA2019_office zip file
+      win_copy:
+        src: /home/gsadmin/Office2019.zip
+        dest: C:\Users\ansible
+    - name: Unzip office SPLA
+      win_unzip:
+        src: C:\Users\ansible\Office2019.zip
+        dest: C:\Users\ansible\Office2019
+    - name: Download office spla
+      win_command:
+        chdir: C:\Users\ansible\Office2019\Office2019
+        cmd: 'setup.exe /download Configuration_Office2019_Standard.xml'
+      notify:
+        - Install SPLA
+  handlers:
+    - name: Install SPLA
+      win_command:
+        chdir: C:\Users\ansible\Office2019\Office2019
+        cmd: 'setup.exe /configure Configuration_Office2019_Standard.xml'
+

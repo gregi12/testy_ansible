@@ -1,0 +1,31 @@
+---
+- name: Install all security, critical, and rollup updates
+  hosts: dell-chlopaku
+  gather_facts: false
+  vars:
+    # Ensure SSH keeps alive during long operations
+    ansible_ssh_args: -o ControlMaster=no -o ServerAliveInterval=30
+
+  tasks:
+    - name: Start periodic update scan
+      include_tasks: update_scan_tasks.yml
+      async: 3600  # Allow this task to run asynchronously for 60 minutes
+      poll: 0      # Don't wait for task completion
+
+    - name: Install security and critical updates
+      ansible.windows.win_updates:
+        category_names:
+          - SecurityUpdates
+          - CriticalUpdates
+        reboot: true
+      become: true
+      become_method: runas
+      become_user: SYSTEM
+      ignore_errors: yes
+
+    - name: Final scan for updates after installation
+      ansible.windows.win_command: usoclient StartInteractiveScan
+      become: true
+      become_method: runas
+      become_user: SYSTEM
+      ignore_errors: yes

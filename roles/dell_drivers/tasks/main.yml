@@ -1,0 +1,40 @@
+---
+  - name: scan to find updates for all drivers
+    win_command: dcu-cli.exe /scan -report=C:\Temp
+    args:
+      chdir: C:\Program Files (x86)\Dell\CommandUpdate
+
+  #- name: set bios password
+   # win_command: dcu-cli.exe /configure -biosPassword="68jchn"
+    #args:
+     # chdir: C:\Program Files\Dell\CommandUpdate
+
+  - name: apply updates
+    win_command: dcu-cli.exe /applyUpdates -autoSuspendBitLocker=enable
+    args:
+      chdir: C:\Program Files (x86)\Dell\CommandUpdate
+    register: update_result
+    ignore_errors: yes
+    failed_when: update_result.rc not in [0, 500]
+
+  - name: Reboot device after udpates
+    win_reboot:
+
+  - name: Wait for the machine to come back online
+    wait_for_connection:
+      timeout: 600
+
+  - name: apply updates
+    win_command: dcu-cli.exe /applyUpdates -autoSuspendBitLocker=enable
+    args:
+      chdir: C:\Program Files (x86)\Dell\CommandUpdate
+    register: update_result
+    ignore_errors: yes
+    failed_when: update_result.rc not in [0, 500]
+
+  - name: Reboot device after udpates
+    win_reboot:
+
+  - name: Wait for the machine to come back online
+    wait_for_connection:
+      timeout: 600

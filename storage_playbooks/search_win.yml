@@ -1,0 +1,16 @@
+---
+- hosts: dell-ella
+  tasks:
+    
+    - name: Install each downloaded update one by one
+      ansible.windows.win_updates:
+        category_names: '*'
+        state: installed
+      register: installed_updates
+      until: installed_updates.reboot_required == false
+      retries: 5
+      delay: 60
+
+    - name: Reboot if required
+      ansible.builtin.reboot:
+      when: installed_updates.reboot_required

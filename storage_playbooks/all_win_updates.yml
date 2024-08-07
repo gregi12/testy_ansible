@@ -1,0 +1,48 @@
+- hosts: dell-last
+  tasks:
+    - name: Create a new PowerShell session
+      win_shell: |
+        $session = New-PSSession -ComputerName dell-first
+        $session.Id
+      register: session_id
+
+    - name: Import PSWindowsUpdate module and list current updates
+      win_shell: |
+        $session = Get-PSSession -Id {{ session_id.stdout }}
+        Invoke-Command -Session $session -ScriptBlock {
+          Import-Module PSWindowsUpdate
+          Get-WindowsUpdate
+        }
+      register: updates_result
+
+    - name: Display updates
+      debug:
+        msg: "{{ updates_result.stdout }}"
+
+    - name: Install all available updates
+      win_shell: |
+        $session = Get-PSSession -Id {{ session_id.stdout }}
+        Invoke-Command -Session $session -ScriptBlock {
+          Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -IgnoreReboot
+        }
+      register: install_result
+
+    - name: Delay for 10 seconds
+      pause:
+        seconds: 10
+
+    - name: Reboot the machine
+      win_reboot:
+
+    - name: Wait for the machine to come back online
+      wait_for_connection:
+        timeout: 300
+
+    - name: Close the PowerShell session
+      win_shell: |
+        $session = Get-PSSession -Id {{ session_id.stdout }}
+        Remove-PSSession -Session $session
+
+    - name: Continue configuration
+      debug:
+        msg: "Continuing configuration after reboot"

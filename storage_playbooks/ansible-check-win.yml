@@ -1,0 +1,13 @@
+- hosts: dell-ella
+  tasks:
+  - name: List all possible updates
+    become: true
+    become_method: runas
+    become_user: ansible
+    win_shell: |
+      Import-Module PSWindowsUpdate
+      Get-WindowsUpdate -Verbose -ErrorAction Stop
+    register: new_updates
+  - debug:
+      var:
+        msg: "{{ new_updates.stdout }}"

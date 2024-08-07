@@ -1,0 +1,4 @@
+- name: testoweplaye
+  hosts: dell-ella
+  roles:
+    - install_latest_WU_agent

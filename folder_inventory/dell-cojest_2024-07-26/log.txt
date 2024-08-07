@@ -1,0 +1,21 @@
+
+PLAY [Configure computer] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [dell-cojest]
+
+TASK [create_dir : Create directory for all installers] ************************
+changed: [dell-cojest]
+
+TASK [7zip : Download the 7-Zip package] ***************************************
+changed: [dell-cojest]
+
+TASK [7zip : Install 7-zip on client] ******************************************
+ok: [dell-cojest]
+
+TASK [remove_dir : Remove dir with installers] *********************************
+changed: [dell-cojest]
+
+PLAY RECAP *********************************************************************
+dell-cojest                : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

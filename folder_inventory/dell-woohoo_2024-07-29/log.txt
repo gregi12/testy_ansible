@@ -1,0 +1,15 @@
+
+PLAY [Configure computer] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [dell-woohoo]
+
+TASK [create_dir : Create directory for all installers] ************************
+changed: [dell-woohoo]
+
+TASK [remove_dir : Remove dir with installers] *********************************
+changed: [dell-woohoo]
+
+PLAY RECAP *********************************************************************
+dell-woohoo                : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

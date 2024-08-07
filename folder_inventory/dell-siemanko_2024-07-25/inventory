@@ -1,0 +1,1 @@
+dell-siemanko ansible_host=dell-siemanko.STREFADEVOPS.LOCAL ansible_user=ansible@STREFADEVOPS.LOCAL ansible_password="Padmawlada123@" ansible_connection=winrm ansible_winrm_transport=kerberos ansible_port=5985 ansible_winrm_ca_trust_path=/home/gsadmin/win-test/files/RootCA_name.crt ansible_winrm_kinit_mode=managed 

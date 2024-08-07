@@ -1,0 +1,17 @@
+---
+- hosts: all
+  tasks:
+  - name: Copy a single file keeping the filename
+    win_copy:
+      src: /home/gsadmin/eset_padma.zip
+      dest: C:\Users\ansible
+
+  - name: Unzip a bz2 (BZip) file
+    win_unzip:
+      src: C:\Users\ansible\eset_padma.zip
+      dest: C:\Users\ansible\eset_padma
+      creates: C:\Users\ansible\eset_padma
+
+  - name: install eset_agent on remote host
+    win_package:
+      path: C:\Users\ansible\eset_padma\agent_x64.msi

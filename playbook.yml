@@ -1,0 +1,19 @@
+- name: Configure computer
+  hosts: dell-kasztanki
+  roles:
+    - nuget
+    - vcc_2015
+    - set_default_bios
+   # - win_update
+    - create_dir
+    - dellcomand
+    - 7zip
+    - firefox
+    - global
+    - eset
+    - statlook
+    - teamviewer
+    - office365
+    - remove_dir
+    - dell_drivers
+

@@ -1,0 +1,6 @@
+---
+# tasks file for create_dir
+  - name: Create directory for all installers
+    win_file:
+      path: C:\Users\ansible\konfiguracja
+      state: directory

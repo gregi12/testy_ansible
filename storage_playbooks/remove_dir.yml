@@ -1,0 +1,7 @@
+---
+ - hosts: all
+   tasks:
+     - name: Remove dir with installers
+       win_file:
+         path: C:\Users\ansible\konfiguracja
+         state: absent

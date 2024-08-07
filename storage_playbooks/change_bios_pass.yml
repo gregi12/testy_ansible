@@ -1,0 +1,6 @@
+- hosts: dell-first
+  tasks:
+    - name: chage bios pass
+      win_shell: |
+        Import-Module DellBIOSProvider
+        Set-Item -Path dellsmbios:\Security\AdminPassword "" -Password 68jchn

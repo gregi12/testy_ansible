@@ -1,0 +1,31 @@
+---
+# tasks file for set_default_bios
+    - name: Import DellBIOSProvider module and get current BIOS setting
+      become: true
+      become_method: runas
+      become_user: ansible 
+      win_shell: |
+        Import-Module DellBIOSProvider
+
+        # Check and set Ahci
+        $currentAhciValue = Get-Item -Path dellsmbios:\SystemConfiguration\EmbSataRaid
+        if ($currentAhciValue.CurrentValue -ne "Ahci") {
+            Set-Item -Path dellsmbios:\SystemConfiguration\EmbSataRaid Ahci
+        }
+
+        # Check and enable Secure Boot
+        $currentSecureBootValue = Get-Item -Path dellsmbios:\SecureBoot\SecureBoot
+        if ($currentSecureBootValue.CurrentValue -ne "Enabled") {
+            Set-Item -Path dellsmbios:\SecureBoot\SecureBoot Enabled
+        }
+
+        # Check and enable TPM Security
+        $currentTpmSecurityValue = Get-Item -Path dellsmbios:\TPMSecurity\TpmSecurity
+        if ($currentTpmSecurityValue.CurrentValue -ne "Enabled") {
+            Set-Item -Path dellsmbios:\TPMSecurity\TpmSecurity Enabled
+        }
+      register: bios_setting_result
+
+    - name: Display BIOS setting results
+      debug:
+        msg: "{{ bios_setting_result.stdout }}"

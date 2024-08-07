@@ -1,0 +1,10 @@
+- hosts: dell-first
+  tasks:
+
+     - name: Copy DellBIOSProvider module from domain controller
+       win_shell: |
+         $Session = New-PSSession -ComputerName "dell-first" -Credential "Contoso\User01"
+         Copy-Item "D:\Folder003\" -Destination "C:\Folder003_Copy\" -ToSession $Session -Recurse
+         $source = "\\10.24.41.58\C$\Program Files\WindowsPowerShell\Modules\DellBIOSProvider"
+         $destination = "C:\Program Files\WindowsPowerShell\Modules\"
+         Copy-Item -Path $source -Destination $destination -Recurse -Force

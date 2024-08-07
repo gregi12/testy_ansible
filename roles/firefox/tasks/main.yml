@@ -1,0 +1,11 @@
+---
+# tasks file for firefox
+  - name: Copy firefox installer to client
+    win_copy:
+      src: /home/gsadmin/Firefox.msi
+      dest: C:\Users\ansible\konfiguracja\Firefox.msi
+
+  - name: Install firefox on the client
+    win_package:
+      path: C:\Users\ansible\konfiguracja\Firefox.msi
+      state: present

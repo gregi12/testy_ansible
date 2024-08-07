@@ -1,0 +1,6 @@
+---
+# tasks file for remove_dir
+  - name: Remove dir with installers
+    win_file:
+      path: C:\Users\ansible\konfiguracja
+      state: absent

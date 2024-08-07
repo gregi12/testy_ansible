@@ -1,0 +1,12 @@
+---
+- hosts: dell
+  tasks:
+  - name: update all drivers
+    win_command:
+      args:
+        
+      argv:
+        - dcu-cli.exe
+        - /applyUpdates
+        - -reboot=enable
+        - -autoSuspendBitLocker=enable

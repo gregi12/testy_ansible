@@ -1,0 +1,15 @@
+- hosts: dell-ella
+  tasks:
+
+    - name: Install rest of windows updates
+      become: true
+      become_method: runas
+      become_user: ansible
+      win_shell: |
+        Import-Module PSWindowsUpdate
+        Get-WindowsUpdate
+      register: results
+
+    - debug:
+        var:
+          msg: "{{ results.stdout }}"

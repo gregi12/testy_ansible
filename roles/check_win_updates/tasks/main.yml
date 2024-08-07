@@ -1,0 +1,15 @@
+---
+# tasks file for check_win_updates
+  - name: List and install all possible updates
+    become: true
+    become_method: runas
+    become_user: ansible
+    ignore_errors: yes
+    win_shell: |
+      Import-Module PSWindowsUpdate
+      Get-WindowsUpdate -IgnoreUserInput -Verbose
+    register: new_updates
+
+  - name: Parse and output the listed updates
+    debug:
+      msg: "{{ new_updates.stdout | parse_windows_update }}"

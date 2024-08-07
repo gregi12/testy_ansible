@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+    - name: Install net framework 4.8
+      win_updates:
+        category_names:
+        - SecurityUpdates
+        - CriticalUpdates
+        accept_list:
+        - KB5011048

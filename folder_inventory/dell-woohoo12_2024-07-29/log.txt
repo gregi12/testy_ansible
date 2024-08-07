@@ -1,0 +1,116 @@
+
+PLAY [Configure computer] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [dell-woohoo12]
+
+TASK [nuget : Install NuGet provider] ******************************************
+changed: [dell-woohoo12]
+
+TASK [nuget : debug] ***********************************************************
+ok: [dell-woohoo12] => {
+    "nuget_install_result": {
+        "changed": true,
+        "cmd": "Install-PackageProvider -Name NuGet -Force -Scope CurrentUser",
+        "delta": "0:00:04.703075",
+        "end": "2024-07-29 12:10:26.422435",
+        "failed": false,
+        "rc": 0,
+        "start": "2024-07-29 12:10:21.719359",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "\r\nName                           Version          Source           Summary                                               \r\n----                           -------          ------           -------                                               \r\nnuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    \r\n\r\n\r\n",
+        "stdout_lines": [
+            "",
+            "Name                           Version          Source           Summary                                               ",
+            "----                           -------          ------           -------                                               ",
+            "nuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    ",
+            "",
+            ""
+        ]
+    }
+}
+
+TASK [nuget : Install the required PowerShell Dell module] *********************
+changed: [dell-woohoo12]
+
+TASK [nuget : debug] ***********************************************************
+ok: [dell-woohoo12] => {
+    "module_install_result": {
+        "changed": true,
+        "cmd": "Install-Module -Name DellBIOSProvider -Force -AllowClobber -Scope CurrentUser",
+        "delta": "0:00:11.297558",
+        "end": "2024-07-29 12:10:42.720589",
+        "failed": false,
+        "rc": 0,
+        "start": "2024-07-29 12:10:31.423031",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "",
+        "stdout_lines": []
+    }
+}
+
+TASK [nuget : Install PSWindowsUpdate] *****************************************
+changed: [dell-woohoo12]
+
+TASK [vcc_2015 : copy installer to host] ***************************************
+changed: [dell-woohoo12]
+
+TASK [vcc_2015 : install vc 2015 so dellbiosprovider can be used] **************
+changed: [dell-woohoo12]
+
+TASK [vcc_2015 : wait 10 sec] **************************************************
+ok: [dell-woohoo12]
+
+TASK [set_default_bios : Import DellBIOSProvider module and get current BIOS setting] ***
+changed: [dell-woohoo12]
+
+TASK [set_default_bios : Display BIOS setting results] *************************
+ok: [dell-woohoo12] => {
+    "msg": ""
+}
+
+TASK [create_dir : Create directory for all installers] ************************
+changed: [dell-woohoo12]
+
+TASK [dellcomand : Copy DCU zip to host machine] *******************************
+changed: [dell-woohoo12]
+
+TASK [dellcomand : Unzip content of archive] ***********************************
+changed: [dell-woohoo12]
+
+TASK [dellcomand : install DCU update tool] ************************************
+changed: [dell-woohoo12]
+
+TASK [dellcomand : check and run if needed dell service which is necessery to avoid bugs] ***
+changed: [dell-woohoo12] => (item=DellClientManagementService)
+
+TASK [remove_dir : Remove dir with installers] *********************************
+changed: [dell-woohoo12]
+
+TASK [dell_drivers : scan to find updates for all drivers] *********************
+changed: [dell-woohoo12]
+
+TASK [dell_drivers : apply updates] ********************************************
+changed: [dell-woohoo12]
+
+TASK [dell_drivers : Reboot device after udpates] ******************************
+changed: [dell-woohoo12]
+
+TASK [dell_drivers : Wait for the machine to come back online] *****************
+ok: [dell-woohoo12]
+
+TASK [dell_drivers : apply updates] ********************************************
+fatal: [dell-woohoo12]: FAILED! => {"changed": true, "cmd": "dcu-cli.exe /applyUpdates -autoSuspendBitLocker=enable", "delta": "0:00:03.814776", "end": "2024-07-29 12:15:50.397287", "failed_when_result": true, "msg": "non-zero return code", "rc": 3003, "start": "2024-07-29 12:15:46.582511", "stderr": "", "stderr_lines": [], "stdout": "\r\nChecking for updates...\r\nAn operation is in progress.\r\nExecution completed.\r\nThe program exited with return code: 3003\r\n", "stdout_lines": ["", "Checking for updates...", "An operation is in progress.", "Execution completed.", "The program exited with return code: 3003"]}
+...ignoring
+
+TASK [dell_drivers : Reboot device after udpates] ******************************
+changed: [dell-woohoo12]
+
+TASK [dell_drivers : Wait for the machine to come back online] *****************
+ok: [dell-woohoo12]
+
+PLAY RECAP *********************************************************************
+dell-woohoo12              : ok=24   changed=17   unreachable=0    failed=0    skipped=0    rescued=0    ignored=1   
+

@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+  - name: Copy TeamViewer.zip to client
+    win_copy:
+      src: /home/gsadmin/TeamViewer_MSI64.zip
+      dest: C:\Users\ansible
+
+  - name: Unzip TeamViewer
+    win_unzip:
+      src: C:\Users\ansible\TeamViewer_MSI64.zip
+      dest: C:\Users\ansible\TeamViewer_MSI64

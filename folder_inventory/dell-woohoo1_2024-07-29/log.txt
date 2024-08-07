@@ -1,0 +1,154 @@
+
+PLAY [Configure computer] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [dell-woohoo1]
+
+TASK [nuget : Install NuGet provider] ******************************************
+changed: [dell-woohoo1]
+
+TASK [nuget : debug] ***********************************************************
+ok: [dell-woohoo1] => {
+    "nuget_install_result": {
+        "changed": true,
+        "cmd": "Install-PackageProvider -Name NuGet -Force -Scope CurrentUser",
+        "delta": "0:00:05.141725",
+        "end": "2024-07-29 10:19:15.024152",
+        "failed": false,
+        "rc": 0,
+        "start": "2024-07-29 10:19:09.882426",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "\r\nName                           Version          Source           Summary                                               \r\n----                           -------          ------           -------                                               \r\nnuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    \r\n\r\n\r\n",
+        "stdout_lines": [
+            "",
+            "Name                           Version          Source           Summary                                               ",
+            "----                           -------          ------           -------                                               ",
+            "nuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    ",
+            "",
+            ""
+        ]
+    }
+}
+
+TASK [nuget : Install the required PowerShell Dell module] *********************
+changed: [dell-woohoo1]
+
+TASK [nuget : debug] ***********************************************************
+ok: [dell-woohoo1] => {
+    "module_install_result": {
+        "changed": true,
+        "cmd": "Install-Module -Name DellBIOSProvider -Force -AllowClobber -Scope CurrentUser",
+        "delta": "0:00:17.079018",
+        "end": "2024-07-29 10:19:36.777986",
+        "failed": false,
+        "rc": 0,
+        "start": "2024-07-29 10:19:19.698968",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "",
+        "stdout_lines": []
+    }
+}
+
+TASK [nuget : Install PSWindowsUpdate] *****************************************
+changed: [dell-woohoo1]
+
+TASK [vcc_2015 : copy installer to host] ***************************************
+changed: [dell-woohoo1]
+
+TASK [vcc_2015 : install vc 2015 so dellbiosprovider can be used] **************
+changed: [dell-woohoo1]
+
+TASK [vcc_2015 : wait 10 sec] **************************************************
+ok: [dell-woohoo1]
+
+TASK [set_default_bios : Import DellBIOSProvider module and get current BIOS setting] ***
+changed: [dell-woohoo1]
+
+TASK [set_default_bios : Display BIOS setting results] *************************
+ok: [dell-woohoo1] => {
+    "msg": ""
+}
+
+TASK [create_dir : Create directory for all installers] ************************
+changed: [dell-woohoo1]
+
+TASK [dellcomand : Copy DCU zip to host machine] *******************************
+changed: [dell-woohoo1]
+
+TASK [dellcomand : Unzip content of archive] ***********************************
+changed: [dell-woohoo1]
+
+TASK [dellcomand : install DCU update tool] ************************************
+changed: [dell-woohoo1]
+
+TASK [dellcomand : check and run if needed dell service which is necessery to avoid bugs] ***
+changed: [dell-woohoo1] => (item=DellClientManagementService)
+
+TASK [7zip : Download the 7-Zip package] ***************************************
+changed: [dell-woohoo1]
+
+TASK [7zip : Install 7-zip on client] ******************************************
+changed: [dell-woohoo1]
+
+TASK [firefox : Copy firefox installer to client] ******************************
+changed: [dell-woohoo1]
+
+TASK [firefox : Install firefox on the client] *********************************
+changed: [dell-woohoo1]
+
+TASK [global : Copy global to the client] **************************************
+changed: [dell-woohoo1]
+
+TASK [global : install Global protect] *****************************************
+changed: [dell-woohoo1]
+
+TASK [eset : Copy eset.zip to client] ******************************************
+changed: [dell-woohoo1]
+
+TASK [eset : Unzip an eset agent] **********************************************
+changed: [dell-woohoo1]
+
+TASK [eset : install eset_agent on remote host] ********************************
+changed: [dell-woohoo1]
+
+TASK [statlook : Copy statlook installer] **************************************
+changed: [dell-woohoo1]
+
+TASK [statlook : Install statlook agent] ***************************************
+changed: [dell-woohoo1]
+
+TASK [teamviewer : Copy TeamViewer.zip to client] ******************************
+changed: [dell-woohoo1]
+
+TASK [teamviewer : Unzip TeamViewer] *******************************************
+changed: [dell-woohoo1]
+
+TASK [teamviewer : Some delay to avoid installation conflitcs] *****************
+ok: [dell-woohoo1]
+
+TASK [teamviewer : Install TeamViewer] *****************************************
+changed: [dell-woohoo1]
+
+TASK [teamviewer : Some delay to avoid installation conflitcs] *****************
+ok: [dell-woohoo1]
+
+TASK [remove_dir : Remove dir with installers] *********************************
+changed: [dell-woohoo1]
+
+TASK [dell_drivers : scan to find updates for all drivers] *********************
+changed: [dell-woohoo1]
+
+TASK [dell_drivers : apply updates] ********************************************
+changed: [dell-woohoo1]
+
+TASK [dell_drivers : Reboot device after udpates] ******************************
+changed: [dell-woohoo1]
+
+TASK [dell_drivers : Wait for the machine to come back online] *****************
+ok: [dell-woohoo1]
+
+PLAY RECAP *********************************************************************
+dell-woohoo1               : ok=37   changed=29   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

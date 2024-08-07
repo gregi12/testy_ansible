@@ -1,0 +1,6 @@
+---
+- hosts: all
+  tasks:
+  - name: Install statlook agent
+    win_package:
+      path: C:\Agent-Statlook-10-10-126-10.msi

@@ -1,0 +1,165 @@
+
+PLAY [Configure computer] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [dell-woohoo]
+
+TASK [nuget : Install NuGet provider] ******************************************
+changed: [dell-woohoo]
+
+TASK [nuget : debug] ***********************************************************
+ok: [dell-woohoo] => {
+    "nuget_install_result": {
+        "changed": true,
+        "cmd": "Install-PackageProvider -Name NuGet -Force -Scope CurrentUser",
+        "delta": "0:00:04.834418",
+        "end": "2024-07-26 08:30:10.776520",
+        "failed": false,
+        "rc": 0,
+        "start": "2024-07-26 08:30:05.942102",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "\r\nName                           Version          Source           Summary                                               \r\n----                           -------          ------           -------                                               \r\nnuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    \r\n\r\n\r\n",
+        "stdout_lines": [
+            "",
+            "Name                           Version          Source           Summary                                               ",
+            "----                           -------          ------           -------                                               ",
+            "nuget                          2.8.5.208        https://onege... NuGet provider for the OneGet meta-package manager    ",
+            "",
+            ""
+        ]
+    }
+}
+
+TASK [nuget : Install the required PowerShell Dell module] *********************
+changed: [dell-woohoo]
+
+TASK [nuget : debug] ***********************************************************
+ok: [dell-woohoo] => {
+    "module_install_result": {
+        "changed": true,
+        "cmd": "Install-Module -Name DellBIOSProvider -Force -AllowClobber -Scope CurrentUser",
+        "delta": "0:00:11.271195",
+        "end": "2024-07-26 08:30:26.480349",
+        "failed": false,
+        "rc": 0,
+        "start": "2024-07-26 08:30:15.209154",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "",
+        "stdout_lines": []
+    }
+}
+
+TASK [nuget : Install PSWindowsUpdate] *****************************************
+changed: [dell-woohoo]
+
+TASK [vcc_2015 : copy installer to host] ***************************************
+changed: [dell-woohoo]
+
+TASK [vcc_2015 : install vc 2015 so dellbiosprovider can be used] **************
+changed: [dell-woohoo]
+
+TASK [vcc_2015 : wait 10 sec] **************************************************
+ok: [dell-woohoo]
+
+TASK [set_default_bios : Import DellBIOSProvider module and get current BIOS setting] ***
+changed: [dell-woohoo]
+
+TASK [set_default_bios : Display BIOS setting results] *************************
+ok: [dell-woohoo] => {
+    "msg": ""
+}
+
+TASK [win_update : Install all security, critical, and rollup updates without a scheduled task] ***
+An exception occurred during task execution. To see the full traceback, use -vvv. The error was: at Invoke-WithPipeOutput, <No file>: line 1005
+fatal: [dell-woohoo]: FAILED! => {"changed": true, "failed_update_count": 1, "filtered_updates": {"07eca7eb-aa02-4f42-96bc-7b2a2bfd4f44": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "07eca7eb-aa02-4f42-96bc-7b2a2bfd4f44", "installed": false, "kb": [], "title": "INTEL - System - 10.1.7.4"}, "0b9300b9-cdb4-4e91-a656-c5dccd349466": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "0b9300b9-cdb4-4e91-a656-c5dccd349466", "installed": false, "kb": [], "title": "Intel Corporation - System - 10/8/2018 12:00:00 AM - 30.100.1841.2"}, "0f61e123-b03b-4eee-8e95-a7124bfce61f": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "0f61e123-b03b-4eee-8e95-a7124bfce61f", "installed": false, "kb": [], "title": "Intel Corporation - Extension - 27.20.100.8280"}, "1ff409c5-2edf-4821-be23-908d46792e7e": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "1ff409c5-2edf-4821-be23-908d46792e7e", "installed": false, "kb": [], "title": "Intel Corporation - Extension - 30.0.101.1338"}, "2020b426-082b-47e1-b4c5-685bc610b276": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "2020b426-082b-47e1-b4c5-685bc610b276", "installed": false, "kb": [], "title": "INTEL - System - 10.1.16.8"}, "294982a8-50ae-4639-919a-75bfc03deae0": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "294982a8-50ae-4639-919a-75bfc03deae0", "installed": false, "kb": [], "title": "Intel - net - 23.20.1.1"}, "2d06482a-45f0-4db0-9ebc-030259a00312": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "2d06482a-45f0-4db0-9ebc-030259a00312", "installed": false, "kb": [], "title": "Intel Corporation - Display - 31.0.101.2127"}, "3d91bf9e-402f-48cb-8a2e-6522d13c1585": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "3d91bf9e-402f-48cb-8a2e-6522d13c1585", "installed": false, "kb": [], "title": "Intel Corporation - Display - 31.0.101.2115"}, "40f21ba9-bb87-4fb9-8461-36a8777cd2f0": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "40f21ba9-bb87-4fb9-8461-36a8777cd2f0", "installed": false, "kb": [], "title": "Intel(R) Corporation - System - 1.41.1379.0"}, "4a3ee7e5-1f64-409d-85ef-2eb6117ccfef": {"categories": ["Definition Updates", "Microsoft Defender Antivirus"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "4a3ee7e5-1f64-409d-85ef-2eb6117ccfef", "installed": false, "kb": ["2267602"], "title": "Aktualizacja analizy zabezpieczeń dla Microsoft Defender Antivirus — KB2267602 (Wersja 1.415.332.0) — Bieżący kanał (ogólna dostępność)"}, "4ba73784-1a9f-43c8-a374-386cda6f04e0": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "4ba73784-1a9f-43c8-a374-386cda6f04e0", "installed": false, "kb": [], "title": "Intel(R) Corporation - System - 10.23.0.3349"}, "4fdd9043-3e02-42fa-a928-d518adc17927": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "4fdd9043-3e02-42fa-a928-d518adc17927", "installed": false, "kb": [], "title": "NVIDIA - Display - 31.0.15.3777"}, "5066519e-14c2-4dc7-aba9-2134c42e7b11": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "5066519e-14c2-4dc7-aba9-2134c42e7b11", "installed": false, "kb": [], "title": "Intel Corporation - HDC - 17.9.6.1019"}, "5dacb422-8842-43c1-897a-ad199e88716e": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "5dacb422-8842-43c1-897a-ad199e88716e", "installed": false, "kb": [], "title": "Intel - Extension - 1/21/2019 12:00:00 AM - 1904.12.0.1208"}, "650b40ad-847d-4748-a08d-f3ceeeccdc65": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "650b40ad-847d-4748-a08d-f3ceeeccdc65", "installed": false, "kb": [], "title": "Intel Corporation - Extension - 31.0.101.2115"}, "6de43e9d-d32d-4c83-95c9-6bc5622b1666": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "6de43e9d-d32d-4c83-95c9-6bc5622b1666", "installed": false, "kb": [], "title": "Dell - CVAULT - 5.14.8.5"}, "73961567-cbb2-4c56-a253-f2b04e0e47ae": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "73961567-cbb2-4c56-a253-f2b04e0e47ae", "installed": false, "kb": [], "title": "Intel Corporation - System - 30.100.2020.7"}, "8b4f4906-e8d5-417a-8248-c493da9fef98": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "8b4f4906-e8d5-417a-8248-c493da9fef98", "installed": false, "kb": [], "title": "Intel - System - 8.7.10802.26924"}, "8c5dc876-e79e-4b36-b30e-c67eba43fee3": {"categories": ["Definition Updates", "Microsoft Defender Antivirus"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "8c5dc876-e79e-4b36-b30e-c67eba43fee3", "installed": false, "kb": ["2267602"], "title": "Aktualizacja analizy zabezpieczeń dla Microsoft Defender Antivirus — KB2267602 (Wersja 1.415.334.0) — Bieżący kanał (ogólna dostępność)"}, "8da1c15a-ae96-44b1-9b30-743c3e17532c": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "8da1c15a-ae96-44b1-9b30-743c3e17532c", "installed": false, "kb": [], "title": "Intel Corporation - Extension - 2/7/2019 12:00:00 AM - 25.20.100.6577"}, "8e8134f8-584b-4d4b-b58b-8a7f1e80fb87": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "8e8134f8-584b-4d4b-b58b-8a7f1e80fb87", "installed": false, "kb": [], "title": "INTEL - System - 10.1.16.8"}, "926f4c07-992f-4bad-a817-5244ad7c0407": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "926f4c07-992f-4bad-a817-5244ad7c0407", "installed": false, "kb": [], "title": "Intel Corporation - Extension - 27.20.100.9126"}, "92afeb6e-49c3-44a1-a052-142586d61ee3": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "92afeb6e-49c3-44a1-a052-142586d61ee3", "installed": false, "kb": [], "title": "Intel Corporation - Extension - 26.20.100.7755"}, "95fae160-e261-4586-bb96-b20db3b09476": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "95fae160-e261-4586-bb96-b20db3b09476", "installed": false, "kb": [], "title": "NVIDIA - Display - 31.0.15.5241"}, "a5a39681-c9c7-4922-b004-03118f797afd": {"categories": ["Updates", "Windows 11"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "a5a39681-c9c7-4922-b004-03118f797afd", "installed": false, "kb": ["5041169"], "title": "2024-07 Aktualizacja zbiorcza (wersja Preview) dotycząca środowiska .NET Framework 3.5 i 4.8.1 dla systemu Windows 11, version 23H2 opartego na architekturze x64 (KB5041169)"}, "aed89f0e-d073-42e4-b81b-c7571e5fb24b": {"categories": ["Definition Updates", "Windows Security platform"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "aed89f0e-d073-42e4-b81b-c7571e5fb24b", "installed": false, "kb": ["5007651"], "title": "Aktualizacja platformy ochrony przez złośliwym kodem Windows Security platform — KB5007651 (wersja 1.0.2402.27001)"}, "ba8bed28-5d34-4fdf-81f6-b308c7c944ee": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "ba8bed28-5d34-4fdf-81f6-b308c7c944ee", "installed": false, "kb": [], "title": "Intel - System - 2336.5.2.0"}, "bc182b12-2394-47c6-ac41-4e7a22d87579": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "bc182b12-2394-47c6-ac41-4e7a22d87579", "installed": false, "kb": [], "title": "INTEL - System - 10.1.14.8"}, "bd059918-15a5-4128-b604-d3e8a12abc5e": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "bd059918-15a5-4128-b604-d3e8a12abc5e", "installed": false, "kb": [], "title": "Realtek Semiconductor Corp. - Extension - 10.0.17134.1"}, "cd6738ce-2ade-434b-93e4-07c82a8c81eb": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "cd6738ce-2ade-434b-93e4-07c82a8c81eb", "installed": false, "kb": [], "title": "Dell, Inc. - Firmware - 0.1.31.0"}, "cdf7747b-2674-4970-8413-97446b702e5c": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "cdf7747b-2674-4970-8413-97446b702e5c", "installed": false, "kb": [], "title": "Intel - Extension - 2316.5.0.0"}, "d5db67e3-87bf-484f-bfeb-1902c304c213": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "d5db67e3-87bf-484f-bfeb-1902c304c213", "installed": false, "kb": [], "title": "Realtek Semiconductor Corp. - MTD - 5/16/2019 12:00:00 AM - 10.0.17763.21313"}, "d7280d51-e446-46c4-888e-a64c4d799ee9": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "d7280d51-e446-46c4-888e-a64c4d799ee9", "installed": false, "kb": [], "title": "INTEL - System - 10.1.7.4"}, "dd6e3b51-4d27-4ac1-a5d1-2640c8e3f46a": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "dd6e3b51-4d27-4ac1-a5d1-2640c8e3f46a", "installed": false, "kb": [], "title": "Intel - Extension - 2345.80.118.0"}, "ddc4c39a-ab63-467e-b7fd-7c3a37684f5b": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "ddc4c39a-ab63-467e-b7fd-7c3a37684f5b", "installed": false, "kb": [], "title": "Intel - Net - 12.19.2.57"}, "e3f1cd4f-daf2-438a-a423-788d977b9bb4": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "e3f1cd4f-daf2-438a-a423-788d977b9bb4", "installed": false, "kb": [], "title": "Intel Corporation - Extension - 31.0.101.2127"}, "e8526d6f-23f3-4be2-a531-a57c5ca4f7a0": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "e8526d6f-23f3-4be2-a531-a57c5ca4f7a0", "installed": false, "kb": [], "title": "Intel - Ports - 2316.5.0.0"}, "eb28f4a8-c0a1-42d2-94f6-34b274adeb7a": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "eb28f4a8-c0a1-42d2-94f6-34b274adeb7a", "installed": false, "kb": [], "title": "Intel - System - 8.7.10802.26924"}, "f38cdf91-4a7d-477e-a481-30fce7c70dc2": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "f38cdf91-4a7d-477e-a481-30fce7c70dc2", "installed": false, "kb": [], "title": "Intel Corporation - Bluetooth - 22.200.0.2"}, "f6c49653-f09f-4b68-91e7-731641431efe": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "f6c49653-f09f-4b68-91e7-731641431efe", "installed": false, "kb": [], "title": "Intel(R) Corporation - HIDClass - 2.2.2.9"}, "f89fbf4a-b939-4450-becc-7e2e1d3226da": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "f89fbf4a-b939-4450-becc-7e2e1d3226da", "installed": false, "kb": [], "title": "Intel Corporation - System - 30.100.2020.7"}, "fd509dc0-2dfb-463b-9af9-34dc55cc5c47": {"categories": ["Update Rollups", "Windows 10", "Windows 10 LTSB", "Windows 10, version 1903 and later", "Windows 11"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "fd509dc0-2dfb-463b-9af9-34dc55cc5c47", "installed": false, "kb": ["890830"], "title": "Narzędzie Windows do usuwania złośliwego oprogramowania dla komputerów z procesorem x64 — v5.126 (KB890830)"}, "ff3406cb-4996-4abd-b1d0-e8b3d95f1db6": {"categories": ["Drivers"], "downloaded": false, "filtered_reason": "category_names", "filtered_reasons": ["category_names"], "id": "ff3406cb-4996-4abd-b1d0-e8b3d95f1db6", "installed": false, "kb": [], "title": "Intel(R) Corporation - Extension - 1.41.1379.0"}}, "found_update_count": 3, "installed_update_count": 0, "msg": "Failed to download all updates - see updates for more information", "reboot_required": false, "rebooted": true, "updates": {"ae432f26-95ba-44f5-8fa9-cea97d7323a2": {"categories": ["Critical Updates"], "downloaded": false, "failure_hresult_code": 2149859352, "failure_msg": "Same as HTTP status 403 - server understood the request, but declined to fulfill it (WU_E_PT_HTTP_STATUS_FORBIDDEN 0x80244018)", "id": "ae432f26-95ba-44f5-8fa9-cea97d7323a2", "installed": false, "kb": ["4023057"], "title": "2023-11 Aktualizacja Windows 11 Version 23H2 dla systemów opartych na architekturze x64 (KB4023057)"}, "c79f3adb-d9dd-4d07-9819-2ce1590b1a10": {"categories": ["Security Updates", "Windows 11"], "downloaded": true, "id": "c79f3adb-d9dd-4d07-9819-2ce1590b1a10", "installed": false, "kb": ["5039895"], "title": "2024-07 Aktualizacja zbiorcza programu .NET Framework 3.5 i 4.8.1 w systemie Windows 11, version 23H2 dla systemów opartych na procesorach x64 (KB5039895)"}, "edc50369-7a68-4258-8e81-98d5b614ae86": {"categories": ["Security Updates"], "downloaded": true, "id": "edc50369-7a68-4258-8e81-98d5b614ae86", "installed": false, "kb": ["5040442"], "title": "2024-07 Aktualizacja zbiorcza dla systemu Windows 11 Version 23H2 dla systemów opartych na architekturze x64 (KB5040442)"}}}
+...ignoring
+
+TASK [create_dir : Create directory for all installers] ************************
+changed: [dell-woohoo]
+
+TASK [dellcomand : Copy DCU zip to host machine] *******************************
+changed: [dell-woohoo]
+
+TASK [dellcomand : Unzip content of archive] ***********************************
+changed: [dell-woohoo]
+
+TASK [dellcomand : install DCU update tool] ************************************
+changed: [dell-woohoo]
+
+TASK [dellcomand : check and run if needed dell service which is necessery to avoid bugs] ***
+changed: [dell-woohoo] => (item=DellClientManagementService)
+
+TASK [7zip : Download the 7-Zip package] ***************************************
+changed: [dell-woohoo]
+
+TASK [7zip : Install 7-zip on client] ******************************************
+changed: [dell-woohoo]
+
+TASK [firefox : Copy firefox installer to client] ******************************
+changed: [dell-woohoo]
+
+TASK [firefox : Install firefox on the client] *********************************
+changed: [dell-woohoo]
+
+TASK [global : Copy global to the client] **************************************
+changed: [dell-woohoo]
+
+TASK [global : install Global protect] *****************************************
+changed: [dell-woohoo]
+
+TASK [eset : Copy eset.zip to client] ******************************************
+changed: [dell-woohoo]
+
+TASK [eset : Unzip an eset agent] **********************************************
+changed: [dell-woohoo]
+
+TASK [eset : install eset_agent on remote host] ********************************
+changed: [dell-woohoo]
+
+TASK [statlook : Copy statlook installer] **************************************
+changed: [dell-woohoo]
+
+TASK [statlook : Install statlook agent] ***************************************
+changed: [dell-woohoo]
+
+TASK [teamviewer : Copy TeamViewer.zip to client] ******************************
+changed: [dell-woohoo]
+
+TASK [teamviewer : Unzip TeamViewer] *******************************************
+changed: [dell-woohoo]
+
+TASK [teamviewer : Some delay to avoid installation conflitcs] *****************
+ok: [dell-woohoo]
+
+TASK [teamviewer : Install TeamViewer] *****************************************
+changed: [dell-woohoo]
+
+TASK [teamviewer : Some delay to avoid installation conflitcs] *****************
+ok: [dell-woohoo]
+
+TASK [office365 : Copy office 365 to client] ***********************************
+changed: [dell-woohoo]
+
+TASK [office365 : Installing office 365] ***************************************
+changed: [dell-woohoo]
+
+TASK [remove_dir : Remove dir with installers] *********************************
+changed: [dell-woohoo]
+
+TASK [dell_drivers : scan to find updates for all drivers] *********************
+changed: [dell-woohoo]
+
+TASK [dell_drivers : apply updates] ********************************************
+changed: [dell-woohoo]
+
+TASK [dell_drivers : Reboot device after udpates] ******************************
+changed: [dell-woohoo]
+
+TASK [dell_drivers : Wait for the machine to come back online] *****************
+ok: [dell-woohoo]
+
+PLAY RECAP *********************************************************************
+dell-woohoo                : ok=40   changed=32   unreachable=0    failed=0    skipped=0    rescued=0    ignored=1   
+

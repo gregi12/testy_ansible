@@ -1,0 +1,32 @@
+---
+- hosts: all
+  tasks:
+
+  - name: Download the 7-Zip package
+    win_get_url:
+      url: https://www.7-zip.org/a/7z2404-x64.msi
+      dest: C:\Users\ansible\Documents
+
+  - name: Install 7-zip on client
+    win_package:
+      path: C:\Users\ansible\Documents\7z2404-x64.msi
+      state: present
+
+  - name: Download firefox
+    win_get_url:
+      url: https://download.mozilla.org/?product=firefox-stub&amp;os=win&amp;lang=en-US&amp;attribution_code=c291cmNl>        dest: c:\FirefoxInstall.exe
+
+  - name: Install firefox on the client
+    win_package:
+      path: c:\FirefoxInstall.exe
+      state: present
+
+  - name: install Global protect
+    win_package:
+      path: C:\GlobalProtect64_NEW.msi
+      state: present
+
+  - name: Installing office 365 
+    win_package:
+      path: C:\Users\ansible\Videos\OfficeSetup.exe
+      state: present

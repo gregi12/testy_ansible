@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+    - name: Install TeamViewer
+      win_shell: C:\Users\ansible\TeamViewer_MSI64\TeamViewer_MSI64\TV_instalacja.ps1

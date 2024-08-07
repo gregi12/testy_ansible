@@ -1,0 +1,48 @@
+---
+# tasks file for critical_win_updates
+    - name: Ensure PSWindowsUpdate module is installed
+      win_shell: |
+        if (-not (Get-Module -ListAvailable -Name PSWindowsUpdate)) {
+            Install-Module -Name PSWindowsUpdate -Force -SkipPublisherCheck
+        }
+
+    - name: Install critical updates using PSWindowsUpdate
+      win_shell: |
+        Import-Module PSWindowsUpdate
+        $updates = Get-WindowsUpdate -MicrosoftUpdate -Category 'Critical Updates'
+        if ($updates) {
+            Install-WindowsUpdate -MicrosoftUpdate -Category 'Critical Updates' -AcceptAll
+        } else {
+            Write-Host "No critical updates available."
+          }
+      become: true
+      become_method: runas
+      become_user: ansible
+      ignore_errors: yes
+
+    - name: Reboot the machine
+      win_reboot:
+
+    - name: Wait for the machine to come back online
+      wait_for_connection:
+        timeout: 600
+
+    - name: Ensure PSWindowsUpdate module is installed
+      win_shell: |
+        if (-not (Get-Module -ListAvailable -Name PSWindowsUpdate)) {
+            Install-Module -Name PSWindowsUpdate -Force -SkipPublisherCheck
+        }
+
+    - name: Install critical updates using PSWindowsUpdate
+      win_shell: |
+        Import-Module PSWindowsUpdate
+        $updates = Get-WindowsUpdate -MicrosoftUpdate -Category 'Critical Updates'
+        if ($updates) {
+            Install-WindowsUpdate -MicrosoftUpdate -Category 'Critical Updates' -AcceptAll
+        } else {
+            Write-Host "No critical updates available."
+          }
+      become: true
+      become_method: runas
+      become_user: ansible
+      ignore_errors: yes

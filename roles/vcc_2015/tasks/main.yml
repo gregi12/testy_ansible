@@ -1,0 +1,20 @@
+---
+    # tasks file for vcc_2015
+    - name: copy installer to host
+      win_copy:
+        src: /home/gsadmin/vc_redist.x64.exe
+        dest: C:\Users\admin\Videos\vc_redist.x64.exe
+    
+    - name: install vc 2015 so dellbiosprovider can be used
+      win_shell: C:\Users\admin\Videos\vc_redist.x64.exe /install /passive /norestart
+
+    - name: wait 10 sec 
+      win_wait_for:
+        timeout: 10
+
+    #- name: Reboot the machine
+     # win_reboot:
+
+    #- name: Wait for the machine to come back online
+     # wait_for_connection:
+      #  timeout: 300
