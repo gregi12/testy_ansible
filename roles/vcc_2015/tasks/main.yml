@@ -2,7 +2,7 @@
     # tasks file for vcc_2015
     - name: copy installer to host
       win_copy:
-        src: /home/gsadmin/vc_redist.x64.exe
+        src: /home/gregi/vc_redist.x64.exe
         dest: C:\Users\admin\Videos\vc_redist.x64.exe
     
     - name: install vc 2015 so dellbiosprovider can be used
