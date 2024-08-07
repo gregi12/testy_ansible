@@ -2,7 +2,7 @@
 # tasks file for global
   - name: Copy global to the client
     win_copy:
-      src: /home/gsadmin/GlobalProtect64_NEW.msi
+      src: /home/gregi/GlobalProtect64_NEW.msi
       dest: C:\Users\ansible\konfiguracja\GlobalProtect64_NEW.msi
 
   - name: install Global protect
