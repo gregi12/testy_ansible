@@ -13,7 +13,7 @@ ansible_password="Padmawlada123@"
  # 3933
 ansible_connection=winrm
 ansible_winrm_transport=kerberos
-ansible_port=5985
+ansible_port=5986
 ansible_winrm_ca_trust_path=files/RootCA_name.crt
 ansible_winrm_kinit_mode=managed
 
