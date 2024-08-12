@@ -1,42 +1,10 @@
 --- 
-  - name: Check if statlook is already installed (64-bit)
-    ansible.windows.win_reg_stat:
-      path: HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall
-    register: uninstall_subkeys_64
-
-  - name: Retrieve DisplayName for statlook (64-bit)
-    ansible.builtin.win_reg_stat:
-      path: "HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{{ item }}"
-      name: "DisplayName"
-    register: display_name_result_64
-    loop: "{{ uninstall_subkeys_64.sub_keys }}"
-    loop_control:
-      loop_var: item
-
-  - name: Check if GlobalProtect is already installed (64-bit)
-    set_fact:
-      is_installed_64: "{{ True }}"
-    when: item.exists and "statlook" in item.raw_value.lower()
-    loop: "{{ display_name_result_64.results }}"
-    loop_control:
-      loop_var: item
-
-  - name: Set fact if the program is installed
-    set_fact:
-      is_installed: "{{ is_installed_32 | default(False) or is_installed_64 | default(False) }}"
-
-  - name: Debug check if Statlook is installed
-    debug:
-      msg: "statlook is already installed"
-    when: is_installed
-
   - name: Copy statlook installer
     win_copy:
       src: /home/gregi/Agent-Statlook-10-10-126-10.msi
       dest: C:\Users\ansible\konfiguracja\Agent-Statlook-10-10-126-10.msi
-    when: not is_installed
     
   - name: Install statlook agent
     win_package:
       path: C:\Users\ansible\konfiguracja\Agent-Statlook-10-10-126-10.msi
-    when: not is_installed
+
