@@ -9,9 +9,9 @@
     #- dellcomand
     #- 7zip
     #- firefox
-    - global
+    #- global
     #- eset
-    #- statlook
+    - statlook
     #- teamviewer
     #- office365
     - remove_dir
