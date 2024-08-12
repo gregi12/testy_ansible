@@ -46,6 +46,14 @@
       loop_control:
         loop_var: item
 
+    - name: Debug DisplayName results (32-bit)
+      debug:
+        msg: "{{ display_name_result_32.results | map(attribute='raw_value') | list }}"
+
+    - name: Debug DisplayName results (64-bit)
+      debug:
+        msg: "{{ display_name_result_64.results | map(attribute='raw_value') | list }}"
+
     - name: Set program installation flags (32-bit)
       set_fact:
         "{{ program.flag }}": True
@@ -53,7 +61,7 @@
       loop_control:
         loop_var: program
       when: program.name in (display_name_result_32.results | map(attribute='raw_value') | list)
-
+   
     - name: Set program installation flags (64-bit)
       set_fact:
         "{{ program.flag }}": True
@@ -62,13 +70,7 @@
         loop_var: program
       when: program.name in (display_name_result_64.results | map(attribute='raw_value') | list)
 
-    - name: Debug DisplayName results (32-bit)
-      debug:
-        msg: "{{ display_name_result_32.results | map(attribute='raw_value') | list }}"
-
-    - name: Debug DisplayName results (64-bit)
-      debug:
-        msg: "{{ display_name_result_64.results | map(attribute='raw_value') | list }}"
+    
 
 - name: Configure computer
   hosts: "{{ nazwa_kompa }}"
