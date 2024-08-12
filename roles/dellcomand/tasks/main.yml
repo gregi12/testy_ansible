@@ -1,21 +1,55 @@
 ---
-# tasks file for dellcomand
+
+  - name: Check if Dell Command is already installed (32-bit)
+    ansible.windows.win_reg_stat:
+      path: HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall
+    register: uninstall_subkeys_32
+
+  - name: Retrieve DisplayName for statlook (32-bit)
+    ansible.builtin.win_reg_stat:
+      path: "HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{{ item }}"
+      name: "DisplayName"
+    register: display_name_result_32
+    loop: "{{ uninstall_subkeys_32.sub_keys }}"
+    loop_control:
+      loop_var: item
+
+  - name: Check if DellCommand is already installed (32-bit)
+    set_fact:
+      is_installed_32: "{{ True }}"
+    when: item.exists and "dell command" in item.raw_value.lower()
+    loop: "{{ display_name_result_32.results }}"
+    loop_control:
+      loop_var: item
+
+  - name: Set fact if the program is installed
+    set_fact:
+      is_installed: "{{ is_installed_32 | default(False) or is_installed_64 | default(False) }}"
+
+  - name: Debug check if DellCommand is installed
+    debug:
+      msg: "DellCommand is already installed"
+    when: is_installed
+    
   - name: Copy DCU zip to host machine
     win_copy:
       src: /home/gregi/DCU5_3.zip
       dest: C:\Users\ansible\DCU5_3.zip
-
+    when: not is_installed
+    
   - name: Unzip content of archive
     win_unzip:
       src: C:\Users\ansible\DCU5_3.zip
       dest: C:\Users\ansible
-
+    when: not is_installed
+    
   - name: install DCU update tool
     win_package:
       path: C:\Users\ansible\DCU5.3\DellCommandUpdate.msi
       state: present
     register: DCU_output
-
+    when: not is_installed
+    
   - name: check and run if needed dell service which is necessery to avoid bugs
     win_service:
       name: "{{ item }}"
@@ -23,3 +57,4 @@
       state: started
     with_items:
       - DellClientManagementService
+    when: not is_installed
