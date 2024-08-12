@@ -52,7 +52,7 @@
       loop: "{{ programs_to_check }}"
       loop_control:
         loop_var: program
-      when: program.name in (display_name_result_32.results | selectattr('exists', 'equalto', True) | map(attribute='raw_value') | list)
+      when: program.name in (display_name_result_32.results | map(attribute='raw_value') | list)
 
     - name: Set program installation flags (64-bit)
       set_fact:
@@ -60,7 +60,7 @@
       loop: "{{ programs_to_check }}"
       loop_control:
         loop_var: program
-      when: program.name in (display_name_result_64.results | selectattr('exists', 'equalto', True) | map(attribute='raw_value') | list)
+      when: program.name in (display_name_result_64.results | map(attribute='raw_value') | list)
 
     - name: Debug DisplayName results (32-bit)
       debug:
