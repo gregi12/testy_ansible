@@ -48,21 +48,19 @@
 
     - name: Set program installation flags (32-bit)
       set_fact:
-        "{{ item.flag }}": True
+        "{{ program.flag }}": True
       loop: "{{ programs_to_check }}"
-      when: "'{{ item.name | lower }}' in (result.raw_value | lower)"
       loop_control:
-        loop_var: result
-      when: program.name | lower in (display_name_result_32.results | map(attribute='raw_value') | map('lower') | list)
+        loop_var: program
+      when: program.name in (display_name_result_32.results | map(attribute='raw_value') | list)
 
     - name: Set program installation flags (64-bit)
       set_fact:
-        "{{ item.flag }}": True
+        "{{ program.flag }}": True
       loop: "{{ programs_to_check }}"
-      when: "'{{ item.name | lower }}' in (result.raw_value | lower)"
       loop_control:
-        loop_var: result
-      when: program.name | lower in (display_name_result_64.results | map(attribute='raw_value') | map('lower') | list)
+        loop_var: program
+      when: program.name in (display_name_result_64.results | map(attribute='raw_value') | list)
 
 - name: Configure computer
   hosts: "{{ nazwa_kompa }}"
@@ -90,5 +88,3 @@
       when: not is_office365_installed
     - remove_dir
     - dell_drivers
-
-
