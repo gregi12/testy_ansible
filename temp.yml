@@ -23,11 +23,6 @@
         path: HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall
       register: uninstall_subkeys_64
 
-    - name: Initialize program installation flags
-      set_fact:
-        "{{ item.flag }}": False
-      loop: "{{ programs_to_check }}"
-
     - name: Retrieve DisplayName for each product (32-bit)
       ansible.builtin.win_reg_stat:
         path: "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{{ item }}"
@@ -46,29 +41,30 @@
       loop_control:
         loop_var: item
 
-    - name: Debug DisplayName results (32-bit)
-      debug:
-        msg: "{{ display_name_result_32.results | map(attribute='raw_value') | list }}"
+    - name: Save 32-bit installed programs list
+      set_fact:
+        installed_programs_32: "{{ display_name_result_32.results | selectattr('exists', 'equalto', True) | map(attribute='raw_value') | list }}"
 
-    - name: Debug DisplayName results (64-bit)
-      debug:
-        msg: "{{ display_name_result_64.results | map(attribute='raw_value') | list }}"
+    - name: Save 64-bit installed programs list
+      set_fact:
+        installed_programs_64: "{{ display_name_result_64.results | selectattr('exists', 'equalto', True) | map(attribute='raw_value') | list }}"
 
-    - name: Set program installation flags (32-bit)
+    - name: Debug 32-bit installed programs list
+      debug:
+        var: installed_programs_32
+
+    - name: Debug 64-bit installed programs list
+      debug:
+        var: installed_programs_64
+
+    - name: Set program installation flags
       set_fact:
         "{{ program.flag }}": True
       loop: "{{ programs_to_check }}"
       loop_control:
         loop_var: program
-      when: program.name in (display_name_result_32.results | map(attribute='raw_value') | list)
-   
-    - name: Set program installation flags (64-bit)
-      set_fact:
-        "{{ program.flag }}": True
-      loop: "{{ programs_to_check }}"
-      loop_control:
-        loop_var: program
-      when: program.name in (display_name_result_64.results | map(attribute='raw_value') | list)
+      when: program.name in installed_programs_32 or program.name in installed_programs_64
+
 
     
 
