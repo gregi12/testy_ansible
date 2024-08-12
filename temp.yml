@@ -65,10 +65,10 @@
 - name: Configure computer
   hosts: "{{ nazwa_kompa }}"
   roles:
-    - nuget
-    - vcc_2015
-    - set_default_bios
-    - win_update
+   # - nuget
+   # - vcc_2015
+   # - set_default_bios
+   # - win_update
     - create_dir
     - role: dellcomand
       when: not is_dell_command_installed
@@ -87,4 +87,4 @@
     - role: office365
       when: not is_office365_installed
     - remove_dir
-    - dell_drivers
+   # - dell_drivers
