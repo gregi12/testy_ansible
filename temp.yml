@@ -53,8 +53,7 @@
       when: "'{{ item.name | lower }}' in (result.raw_value | lower)"
       loop_control:
         loop_var: result
-      with_items:
-        - "{{ display_name_result_32.results }}"
+      when: program.name | lower in (display_name_result_32.results | map(attribute='raw_value') | map('lower') | list)
 
     - name: Set program installation flags (64-bit)
       set_fact:
@@ -63,8 +62,7 @@
       when: "'{{ item.name | lower }}' in (result.raw_value | lower)"
       loop_control:
         loop_var: result
-      with_items:
-        - "{{ display_name_result_64.results }}"
+      when: program.name | lower in (display_name_result_64.results | map(attribute='raw_value') | map('lower') | list)
 
 - name: Configure computer
   hosts: "{{ nazwa_kompa }}"
