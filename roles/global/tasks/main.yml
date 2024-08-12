@@ -1,66 +1,11 @@
 ---
-  - name: Check if GlobalProtect is already installed (32-bit)
-    ansible.windows.win_reg_stat:
-      path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall
-    register: uninstall_subkeys_32
-
-  - name: Check if GlobalProtect is already installed (64-bit)
-    ansible.windows.win_reg_stat:
-      path: HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall
-    register: uninstall_subkeys_64
-
-  - name: Retrieve DisplayName for "{{ software_name }}" (32-bit)
-    ansible.builtin.win_reg_stat:
-      path: "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{{ item }}"
-      name: "DisplayName"
-    register: display_name_result_32
-    loop: "{{ uninstall_subkeys_32.sub_keys }}"
-    loop_control:
-      loop_var: item
-
-  - name: Retrieve DisplayName for "{{ software_name }}" (64-bit)
-    ansible.builtin.win_reg_stat:
-      path: "HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{{ item }}"
-      name: "DisplayName"
-    register: display_name_result_64
-    loop: "{{ uninstall_subkeys_64.sub_keys }}"
-    loop_control:
-      loop_var: item
-
-  - name: Check if GlobalProtect is already installed (32-bit)
-    set_fact:
-      is_installed_32: "{{ True }}"
-    when: item.exists and "globalprotect" in item.raw_value.lower()
-    loop: "{{ display_name_result_32.results }}"
-    loop_control:
-      loop_var: item
-
-  - name: Check if GlobalProtect is already installed (64-bit)
-    set_fact:
-      is_installed_64: "{{ True }}"
-    when: item.exists and "globalprotect" in item.raw_value.lower()
-    loop: "{{ display_name_result_64.results }}"
-    loop_control:
-      loop_var: item
-
-  - name: Set fact if the program is installed
-    set_fact:
-      is_installed: "{{ is_installed_32 | default(False) or is_installed_64 | default(False) }}"
-
-  - name: Debug check if GlobalProtect is installed
-    debug:
-      msg: "GlobalProtect is already installed"
-    when: is_installed
-
-# tasks file for global
   - name: Copy global to the client
     win_copy:
       src: /home/gregi/GlobalProtect64_NEW.msi
       dest: C:\Users\ansible\konfiguracja\GlobalProtect64_NEW.msi
-    when: not is_installed
     
   - name: install Global protect
     win_package:
       path: C:\Users\ansible\konfiguracja\GlobalProtect64_NEW.msi
       state: present
-    when: not is_installed
+    
