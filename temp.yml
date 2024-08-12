@@ -3,16 +3,27 @@
   gather_facts: false
   vars:
     programs_to_check:
-      - { name: "7-zip", flag: "is_7zip_installed" }
-      - { name: "mozilla firefox", flag: "is_firefox_installed" }
-      - { name: "dell command", flag: "is_dell_command_installed" }
-      - { name: "eset", flag: "is_eset_installed" }
-      - { name: "statlook", flag: "is_statlook_installed" }
-      - { name: "teamviewer", flag: "is_teamviewer_installed" }
-      - { name: "microsoft 365", flag: "is_office365_installed" }
-      - { name: "globalprotect", flag: "is_global_installed" }
+      - { name: "7-Zip 24.04 (x64 edition)", flag: "is_7zip_installed" }
+      - { name: "Mozilla Firefox (x64 pl)", flag: "is_firefox_installed" }
+      - { name: "Dell Command | Update", flag: "is_dell_command_installed" }
+      - { name: "ESET Management Agent", flag: "is_eset_installed" }
+      - { name: "Statlook Agent", flag: "is_statlook_installed" }
+      - { name: "TeamViewer Host", flag: "is_teamviewer_installed" }
+      - { name: "Aplikacje Microsoft 365 dla firm - pl-pl", flag: "is_office365_installed" }
+      - { name: "GlobalProtect", flag: "is_global_installed" }
 
   tasks:
+    - name: Initialize all installation flags to False
+      set_fact:
+        is_7zip_installed: False
+        is_firefox_installed: False
+        is_dell_command_installed: False
+        is_eset_installed: False
+        is_statlook_installed: False
+        is_teamviewer_installed: False
+        is_office365_installed: False
+        is_global_installed: False
+
     - name: Get all subkeys under the Uninstall registry path (32-bit)
       ansible.windows.win_reg_stat:
         path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall
@@ -64,9 +75,6 @@
       loop_control:
         loop_var: program
       when: program.name in installed_programs_32 or program.name in installed_programs_64
-
-
-    
 
 - name: Configure computer
   hosts: "{{ nazwa_kompa }}"
