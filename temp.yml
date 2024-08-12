@@ -91,4 +91,4 @@
     - role: office365
       when: not is_office365_installed
     - remove_dir
-    - dell_drivers
+   # - dell_drivers
