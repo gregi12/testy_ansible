@@ -1,19 +1,96 @@
+- name: Check installed programs and set flags
+  hosts: "{{ nazwa_kompa }}"
+  gather_facts: false
+  vars:
+    programs_to_check:
+      - { name: "7-zip", flag: "is_7zip_installed" }
+      - { name: "mozilla firefox", flag: "is_firefox_installed" }
+      - { name: "dell command", flag: "is_dell_command_installed" }
+      - { name: "eset", flag: "is_eset_installed" }
+      - { name: "statlook", flag: "is_statlook_installed" }
+      - { name: "teamviewer", flag: "is_teamviewer_installed" }
+      - { name: "microsoft 365 dla firm", flag: "is_office365_installed" }
+      - { name: "globalprotect", flag: "is_global_installed" }
+
+  tasks:
+    - name: Get all subkeys under the Uninstall registry path (32-bit)
+      ansible.windows.win_reg_stat:
+        path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall
+      register: uninstall_subkeys_32
+
+    - name: Get all subkeys under the Uninstall registry path (64-bit)
+      ansible.windows.win_reg_stat:
+        path: HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall
+      register: uninstall_subkeys_64
+
+    - name: Initialize program installation flags
+      set_fact:
+        "{{ item.flag }}": False
+      loop: "{{ programs_to_check }}"
+
+    - name: Retrieve DisplayName for each product (32-bit)
+      ansible.builtin.win_reg_stat:
+        path: "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{{ item }}"
+        name: "DisplayName"
+      register: display_name_result_32
+      loop: "{{ uninstall_subkeys_32.sub_keys }}"
+      loop_control:
+        loop_var: item
+
+    - name: Retrieve DisplayName for each product (64-bit)
+      ansible.builtin.win_reg_stat:
+        path: "HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{{ item }}"
+        name: "DisplayName"
+      register: display_name_result_64
+      loop: "{{ uninstall_subkeys_64.sub_keys }}"
+      loop_control:
+        loop_var: item
+
+    - name: Set program installation flags (32-bit)
+      set_fact:
+        "{{ item.flag }}": True
+      loop: "{{ programs_to_check }}"
+      when: "'{{ item.name | lower }}' in (result.raw_value | lower)"
+      loop_control:
+        loop_var: result
+      with_items:
+        - "{{ display_name_result_32.results }}"
+
+    - name: Set program installation flags (64-bit)
+      set_fact:
+        "{{ item.flag }}": True
+      loop: "{{ programs_to_check }}"
+      when: "'{{ item.name | lower }}' in (result.raw_value | lower)"
+      loop_control:
+        loop_var: result
+      with_items:
+        - "{{ display_name_result_64.results }}"
+
 - name: Configure computer
   hosts: "{{ nazwa_kompa }}"
   roles:
-    #- nuget
-    #- vcc_2015
-    #- set_default_bios
-    #- win_update
+    - nuget
+    - vcc_2015
+    - set_default_bios
+    - win_update
     - create_dir
-    #- dellcomand
-    #- 7zip
-    #- firefox
-    #- global
-    #- eset
-    - statlook
-    #- teamviewer
-    #- office365
+    - role: dellcomand
+      when: not is_dell_command_installed
+    - role: 7zip
+      when: not is_7zip_installed
+    - role: firefox
+      when: not is_firefox_installed
+    - role: global
+      when: not is_global_installed
+    - role: eset
+      when: not is_eset_installed
+    - role: statlook
+      when: not is_statlook_installed
+    - role: teamviewer
+      when: not is_teamviewer_installed
+    - role: office365
+      when: not is_office365_installed
     - remove_dir
-    #- dell_drivers
+    - dell_drivers
+
 
