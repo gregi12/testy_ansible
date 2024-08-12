@@ -83,22 +83,22 @@
     #- vcc_2015
     #- set_default_bios
     #- win_update
-    - create_dir
-    - role: dellcomand
-      when: not is_dell_command_installed
-    - role: 7zip
-      when: not is_7zip_installed
-    - role: firefox
-      when: not is_firefox_installed
-    - role: global
-      when: not is_global_installed
-    - role: eset
-      when: not is_eset_installed
-    - role: statlook
-      when: not is_statlook_installed
-    - role: teamviewer
-      when: not is_teamviewer_installed
-    - role: office365
-      when: not is_office365_installed
-    - remove_dir
-   # - dell_drivers
+   # - create_dir
+    #- role: dellcomand
+     # when: not is_dell_command_installed
+    #- role: 7zip
+    #  when: not is_7zip_installed
+    #- role: firefox
+    #  when: not is_firefox_installed
+    #- role: global
+    #  when: not is_global_installed
+    #- role: eset
+    #  when: not is_eset_installed
+    #- role: statlook
+    #  when: not is_statlook_installed
+    #- role: teamviewer
+    #  when: not is_teamviewer_installed
+    #- role: office365
+    #  when: not is_office365_installed
+    #- remove_dir
+    - dell_drivers
