@@ -5,7 +5,7 @@
       chdir: C:\Program Files (x86)\Dell\CommandUpdate
 
   #- name: set bios password
-   # win_command: dcu-cli.exe /configure -biosPassword="68jchn"
+   # win_command: dcu-cli.exe /configure -biosPassword="password"
     #args:
      # chdir: C:\Program Files\Dell\CommandUpdate
 
