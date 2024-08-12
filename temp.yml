@@ -1,5 +1,5 @@
 - name: Configure computer
-  hosts: "{{ komputerName }}"
+  hosts: "{{ nazwa_kompa }}"
   roles:
     #- nuget
     #- vcc_2015
