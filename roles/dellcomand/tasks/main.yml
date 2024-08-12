@@ -2,16 +2,16 @@
   - name: Copy DCU zip to host machine
     win_copy:
       src: /home/gregi/DCU5_3.zip
-      dest: C:\Users\ansible\DCU5_3.zip
+      dest: C:\Users\ansible\konfiguracja\DCU5_3.zip
     
   - name: Unzip content of archive
     win_unzip:
-      src: C:\Users\ansible\DCU5_3.zip
-      dest: C:\Users\ansible
+      src: C:\Users\ansible\konfiguracja\DCU5_3.zip
+      dest: C:\Users\ansible\konfiguracja
     
   - name: install DCU update tool
     win_package:
-      path: C:\Users\ansible\DCU5.3\DellCommandUpdate.msi
+      path: C:\Users\ansible\konfiguracja\DCU5.3\DellCommandUpdate.msi
       state: present
     register: DCU_output
     
