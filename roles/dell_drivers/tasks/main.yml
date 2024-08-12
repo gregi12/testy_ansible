@@ -10,7 +10,7 @@
      # chdir: C:\Program Files\Dell\CommandUpdate
 
   - name: apply updates
-    win_command: dcu-cli.exe /applyUpdates -autoSuspendBitLocker=enable
+    win_command: dcu-cli.exe /applyUpdates -autoSuspendBitLocker=enable -reboot=enable
     args:
       chdir: C:\Program Files (x86)\Dell\CommandUpdate
     register: update_result
@@ -25,7 +25,7 @@
       timeout: 600
 
   - name: apply updates
-    win_command: dcu-cli.exe /applyUpdates -autoSuspendBitLocker=enable
+    win_command: dcu-cli.exe /applyUpdates -autoSuspendBitLocker=enable -reboot=enable
     args:
       chdir: C:\Program Files (x86)\Dell\CommandUpdate
     register: update_result
