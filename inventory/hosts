@@ -1,4 +1,6 @@
 [win]
+test1 ansible_host=GZ-DEV-WIN11-1.strefadevops.local
+test2 ansible_host=GZ-DEV-WIN11-2.strefadevops.local
 kasztanowelove ansible_host=KASZTANOWELOVE.strefadevops.local
 tak ansible_host=bvvvvvvvsfmf.strefadevops.local
 [win:vars]
