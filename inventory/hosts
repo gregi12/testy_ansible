@@ -1,5 +1,5 @@
 [win]
-win11 ansible_host=ansible-test.strefadevops.local
+kasztanowelove ansible_host=KASZTANOWELOVE.strefadevops.local
 tak ansible_host=bvvvvvvvsfmf.strefadevops.local
 [win:vars]
 ansible_user=ansible@STREFADEVOPS.LOCAL
