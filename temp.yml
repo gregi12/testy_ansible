@@ -1,6 +1,6 @@
 - name: Check installed programs and set flags
   hosts: "{{ nazwa_kompa }}"
-  gather_facts: false
+ 
   vars:
     programs_to_check:
       - { name: "7-Zip 24.04 (x64 edition)", flag: "is_7zip_installed" }
